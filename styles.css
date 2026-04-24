@@ -45,6 +45,8 @@ body {
   background: transparent;
   cursor: pointer;
   z-index: 3;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .hotspot:focus-visible {
@@ -69,4 +71,5 @@ body {
   font-size: clamp(10px, 0.9vw, 14px);
   letter-spacing: 0.02em;
   z-index: 3;
+  pointer-events: none;
 }
