@@ -2,6 +2,7 @@ const dashboardImage = document.getElementById("dashboardImage");
 const hotspotsLayer = document.getElementById("hotspots");
 const hint = document.getElementById("hint");
 const quickNav = document.querySelector(".quick-nav");
+const controlPanel = document.querySelector(".control-panel");
 
 const screens = {
   home: {
@@ -61,6 +62,14 @@ const navigateTo = (screenKey) => {
   dashboardImage.alt = `EV dashboard ${screenKey} screen`;
   hint.textContent = screen.hint;
   renderHotspots(screen.hotspots);
+  highlightActiveButtons();
+};
+
+const highlightActiveButtons = () => {
+  const allButtons = document.querySelectorAll("button[data-screen]");
+  allButtons.forEach((button) => {
+    button.classList.toggle("active", button.dataset.screen === currentScreen);
+  });
 };
 
 const renderHotspots = (hotspots) => {
@@ -104,20 +113,42 @@ document.addEventListener("keydown", (event) => {
   }
 
   if (event.key.toLowerCase() === "d") {
-    debugHotspots = !debugHotspots;
-    document.body.classList.toggle("show-hotspots", debugHotspots);
-    hint.textContent = debugHotspots
-      ? `${screens[currentScreen].hint} | Debug hotspots ON`
-      : screens[currentScreen].hint;
+    toggleDebug();
   }
 });
 
 quickNav.addEventListener("click", (event) => {
+  const actionButton = event.target.closest("button[data-action='toggle-debug']");
+  if (actionButton) {
+    toggleDebug();
+    return;
+  }
+
   const button = event.target.closest("button[data-screen]");
   if (!button) {
     return;
   }
   navigateTo(button.dataset.screen);
 });
+
+controlPanel.addEventListener("click", (event) => {
+  const button = event.target.closest("button[data-screen]");
+  if (!button) {
+    return;
+  }
+  if (button.dataset.screen === "menu") {
+    navigateTo(currentScreen === "menu" ? "home" : "menu");
+    return;
+  }
+  navigateTo(button.dataset.screen);
+});
+
+const toggleDebug = () => {
+  debugHotspots = !debugHotspots;
+  document.body.classList.toggle("show-hotspots", debugHotspots);
+  hint.textContent = debugHotspots
+    ? `${screens[currentScreen].hint} | Debug hotspots ON`
+    : screens[currentScreen].hint;
+};
 
 navigateTo("home");
