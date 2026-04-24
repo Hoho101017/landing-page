@@ -33,14 +33,29 @@ body {
   user-select: none;
 }
 
-.menu-hitbox {
+.hotspot {
   position: absolute;
-  top: 3.2%;
-  left: 2.2%;
-  width: 4.8%;
-  aspect-ratio: 1 / 1;
   border: 0;
   background: transparent;
   cursor: pointer;
   z-index: 2;
+}
+
+.hotspot:focus-visible {
+  outline: 2px solid #8cb8ff;
+  outline-offset: 1px;
+}
+
+.hint {
+  position: absolute;
+  right: 2%;
+  bottom: 2%;
+  margin: 0;
+  padding: 8px 12px;
+  border-radius: 10px;
+  color: #d9e2ff;
+  background: rgba(8, 12, 20, 0.7);
+  font-size: clamp(10px, 0.9vw, 14px);
+  letter-spacing: 0.02em;
+  z-index: 3;
 }
