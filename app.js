@@ -24,7 +24,8 @@ const screens = {
     image: "./assets/auto-feature.png",
     hint: "Menu opened",
     hotspots: [
-      { label: "Close sidebar", target: "home", top: 2.8, left: 1.8, width: 6.0, height: 8.6 },
+      // This is updated to use the new 'goBack' action
+      { label: "Close sidebar", action: "goBack", top: 2.8, left: 1.8, width: 6.0, height: 8.6 },
       { label: "Maps navigation", target: "maps", top: 4.6, left: 86.0, width: 7.0, height: 9.0 },
       { label: "Voice command", target: "voice", top: 4.6, left: 79.0, width: 7.0, height: 9.0 },
       { label: "Settings", target: "settingsDark", top: 10.8, left: 1.8, width: 6.0, height: 8.6 },
@@ -100,12 +101,19 @@ const screens = {
 
 const missingImages = new Set();
 let currentScreen = "home";
+// This new variable remembers where you came from
+let previousScreen = "home"; 
 let debugHotspots = false;
 
 const navigateTo = (screenKey) => {
   const screen = screens[screenKey];
   if (!screen) {
     return;
+  }
+
+  // Record the previous screen right before opening the menu
+  if (screenKey === "menu" && currentScreen !== "menu") {
+    previousScreen = currentScreen;
   }
 
   currentScreen = screenKey;
@@ -127,7 +135,14 @@ const renderHotspots = (hotspots) => {
     button.style.left = `${spot.left}%`;
     button.style.width = `${spot.width}%`;
     button.style.height = `${spot.height}%`;
+    
     button.addEventListener("click", () => {
+      // This new block handles the 'goBack' memory action
+      if (spot.action === "goBack") {
+        navigateTo(previousScreen);
+        return;
+      }
+      
       if (spot.target) {
         navigateTo(spot.target);
         return;
@@ -142,6 +157,7 @@ const renderHotspots = (hotspots) => {
         hint.textContent = `${screens[currentScreen].hint} | Volume ${volumeLevel}%`;
       }
     });
+    
     hotspotsLayer.appendChild(button);
   });
 };
