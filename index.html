@@ -9,18 +9,55 @@
   <body>
     <main class="app-shell">
       <section class="dashboard-frame" aria-label="EV dashboard">
-        <img
-          id="dashboardImage"
-          class="dashboard-image"
-          src="./assets/home-default.png"
-          alt="EV car dashboard"
-        />
 
-        <div id="hotspots" class="hotspots-layer" aria-hidden="false"></div>
+        <img id="dashboardImage" class="dashboard-image"
+             src="./assets/home-default.png" alt="EV car dashboard" />
+
+        <div id="hotspots" class="hotspots-layer"></div>
+
+        <!-- Live clock -->
+        <div id="clockOverlay" class="clock-overlay">
+          <div id="clockTime" class="clock-time">00:00</div>
+          <div id="clockDate" class="clock-date">SUN | 1 JAN</div>
+        </div>
+
+        <!-- Gear indicator (home screens) -->
+        <div id="gearOverlay" class="gear-overlay hidden">
+          <button class="gear-btn" data-gear="P">P</button>
+          <button class="gear-btn" data-gear="R">R</button>
+          <button class="gear-btn" data-gear="N">N</button>
+          <button class="gear-btn active" data-gear="D">D</button>
+        </div>
+
+        <!-- Volume bar (music screen) -->
+        <div id="volumeOverlay" class="volume-overlay hidden">
+          <span class="vol-icon">🔊</span>
+          <div class="vol-track">
+            <div id="volFill" class="vol-fill"></div>
+          </div>
+          <span id="volPct" class="vol-pct">50%</span>
+        </div>
+
+        <!-- Driving mode indicator (auto-feature screen) -->
+        <div id="modeOverlay" class="mode-overlay hidden">
+          <span class="mode-label">MODE</span>
+          <span id="modeValue" class="mode-value">NORMAL</span>
+        </div>
+
+        <!-- Brightness indicator (auto-feature screen) -->
+        <div id="brightOverlay" class="bright-overlay hidden">
+          <span class="bright-icon">☀</span>
+          <div class="bright-track">
+            <div id="brightFill" class="bright-fill" style="width:70%"></div>
+          </div>
+          <span id="brightPct" class="bright-pct">70%</span>
+        </div>
+
+        <!-- Hint bar -->
         <p id="hint" class="hint" aria-live="polite"></p>
+
       </section>
     </main>
-
     <script src="./app.js"></script>
   </body>
 </html>
