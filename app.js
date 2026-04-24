@@ -1,6 +1,7 @@
 const dashboardImage = document.getElementById("dashboardImage");
 const hotspotsLayer = document.getElementById("hotspots");
 const hint = document.getElementById("hint");
+const quickNav = document.querySelector(".quick-nav");
 
 const screens = {
   home: {
@@ -47,6 +48,7 @@ const screens = {
 
 const missingImages = new Set();
 let currentScreen = "home";
+let debugHotspots = false;
 
 const navigateTo = (screenKey) => {
   const screen = screens[screenKey];
@@ -100,6 +102,22 @@ document.addEventListener("keydown", (event) => {
   if (nextScreen) {
     navigateTo(nextScreen);
   }
+
+  if (event.key.toLowerCase() === "d") {
+    debugHotspots = !debugHotspots;
+    document.body.classList.toggle("show-hotspots", debugHotspots);
+    hint.textContent = debugHotspots
+      ? `${screens[currentScreen].hint} | Debug hotspots ON`
+      : screens[currentScreen].hint;
+  }
+});
+
+quickNav.addEventListener("click", (event) => {
+  const button = event.target.closest("button[data-screen]");
+  if (!button) {
+    return;
+  }
+  navigateTo(button.dataset.screen);
 });
 
 navigateTo("home");

@@ -8,6 +8,14 @@
   </head>
   <body>
     <main class="app-shell">
+      <nav class="quick-nav" aria-label="Screen navigation">
+        <button type="button" data-screen="home">Home</button>
+        <button type="button" data-screen="menu">Menu</button>
+        <button type="button" data-screen="maps">Map</button>
+        <button type="button" data-screen="voice">Voice</button>
+        <button type="button" data-screen="music">Music</button>
+        <button type="button" data-screen="camera">Camera</button>
+      </nav>
       <section class="dashboard-frame" aria-label="EV dashboard">
         <img
           id="dashboardImage"
@@ -16,7 +24,7 @@
           alt="EV car dashboard"
         />
 
-        <div id="hotspots" aria-hidden="false"></div>
+        <div id="hotspots" class="hotspots-layer" aria-hidden="false"></div>
         <p id="hint" class="hint" aria-live="polite"></p>
       </section>
     </main>
